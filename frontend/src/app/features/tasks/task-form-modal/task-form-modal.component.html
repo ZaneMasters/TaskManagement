@@ -1,0 +1,74 @@
+<div class="fixed inset-0 z-10 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" (click)="onCancel()"></div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+    <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+      <div>
+        <div class="mt-3 text-center sm:mt-0 sm:text-left">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+            {{ isEditMode ? 'Editar Tarea' : 'Crear Nueva Tarea' }}
+          </h3>
+          <div class="mt-4">
+            
+            <div *ngIf="error" class="mb-4 bg-red-50 border-l-4 border-red-400 p-4">
+              <p class="text-sm text-red-700">{{ error }}</p>
+            </div>
+
+            <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+              <div class="space-y-4">
+                <div>
+                  <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+                  <div class="mt-1">
+                    <input type="text" id="title" formControlName="title"
+                      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
+                      placeholder="Ej. Comprar víveres">
+                  </div>
+                  <p *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched" class="mt-2 text-sm text-red-600">
+                    El título es requerido y no debe exceder los 100 caracteres.
+                  </p>
+                </div>
+
+                <div>
+                  <label for="description" class="block text-sm font-medium text-gray-700">Descripción <span class="text-gray-400 font-normal">(Opcional)</span></label>
+                  <div class="mt-1">
+                    <textarea id="description" formControlName="description" rows="3"
+                      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
+                      placeholder="Breve descripción de la tarea..."></textarea>
+                  </div>
+                  <p *ngIf="taskForm.get('description')?.invalid && taskForm.get('description')?.touched" class="mt-2 text-sm text-red-600">
+                    La descripción no debe exceder los 500 caracteres.
+                  </p>
+                </div>
+
+                <div>
+                  <label for="status" class="block text-sm font-medium text-gray-700">Estado</label>
+                  <div class="mt-1">
+                    <select id="status" formControlName="status"
+                      class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md border">
+                      <option value="pending">Pendiente</option>
+                      <option value="in_progress">En Progreso</option>
+                      <option value="done">Completada</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
+                <button type="submit" [disabled]="isSubmitting"
+                  class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 transition-colors">
+                  {{ isSubmitting ? 'Guardando...' : 'Guardar Tarea' }}
+                </button>
+                <button type="button" (click)="onCancel()" [disabled]="isSubmitting"
+                  class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm disabled:opacity-50 transition-colors">
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

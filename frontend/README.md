@@ -36,15 +36,15 @@ graph TD
     User -->|Escribe en Búsqueda| List[Task List Component]
     User -->|Cambia Estado / Click Borrar| Item[Task Item Component]
 
-    Modal -->|Envía FormGroup válido| List
-    Item -->|@Output Event| List
+    Modal -->|"FormGroup válido"| List
+    Item -->|"Output Event"| List
 
-    List -->|Llama a métodos CRUD| Service(Task Service)
+    List -->|"Métodos CRUD"| Service(Task Service)
     
-    Service -->|Petición HTTP pura| Interceptor{Auth Interceptor}
-    Interceptor -->|Inyecta Bearer Token| HttpClient[Angular HttpClient]
+    Service -->|"Petición HTTP"| Interceptor{Auth Interceptor}
+    Interceptor -->|"Inyecta Token"| HttpClient[Angular HttpClient]
     
-    HttpClient -->|Red| API[(Backend REST API)]
+    HttpClient -->|"Petición de Red"| API[(Backend REST API)]
     
     API -->|JSON Response| HttpClient
     HttpClient -->|Observable| List
